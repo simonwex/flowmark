@@ -16,7 +16,7 @@ This document outlines the planned features and improvements for the FlowMark li
 - [x] Create a CLI entry point (`bin/flowmark.js`)
 - [x] Implement command-line argument parsing
 - [x] Add watch mode for live reload during development
-- [ ] Support batch processing of multiple files
+- [x] Support batch processing of multiple files
 - [ ] Add command for initializing a new storyboard from a template
 
 ### Visual Enhancements
