@@ -4,7 +4,9 @@
   "description": "A library to represent UX storyboards using Markdown",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "markdown",
@@ -16,5 +18,8 @@
   "license": "MIT",
   "dependencies": {
     "marked": "^4.3.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
-} 
+}

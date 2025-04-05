@@ -127,12 +127,19 @@ function generateHTML(storyboard) {
 /**
  * Processes a markdown file and returns HTML
  * @param {string} filePath - Path to the markdown file
+ * @param {string} [outputPath] - Path to write the output HTML file, if specified
  * @returns {string} Generated HTML
  */
-function processFile(filePath) {
+function processFile(filePath, outputPath) {
   const markdownContent = fs.readFileSync(filePath, 'utf-8');
   const storyboard = parseStoryboard(markdownContent);
-  return generateHTML(storyboard);
+  const html = generateHTML(storyboard);
+  
+  if (outputPath) {
+    fs.writeFileSync(outputPath, html);
+  }
+  
+  return html;
 }
 
 module.exports = {

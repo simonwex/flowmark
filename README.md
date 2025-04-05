@@ -57,4 +57,24 @@ npm install
 
 ## Contributing
 
+### Development
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/storyboard.md.git
+cd storyboard.md
+
+# Install dependencies
+npm install
+
+# Run tests
+npm test
+
+# Run tests in watch mode (useful during development)
+npm run test:watch
+
+# Generate test coverage report
+npm run test:coverage
+```
+
 <!-- Add contribution guidelines here --> 
