@@ -13,6 +13,9 @@ let directoryMode = false;
 let inputDir = null;
 let outputDir = null;
 let recursive = false;
+let initMode = false;
+let templateName = 'basic';
+let outputStoryboardPath = null;
 
 // Process arguments
 for (let i = 0; i < args.length; i++) {
@@ -31,6 +34,19 @@ for (let i = 0; i < args.length; i++) {
     outputDir = args[++i];
   } else if (arg === '--recursive' || arg === '-r') {
     recursive = true;
+  } else if (arg === 'init') {
+    initMode = true;
+    if (i + 1 < args.length && !args[i + 1].startsWith('-')) {
+      outputStoryboardPath = args[++i];
+    }
+    // Look for template flag
+    for (let j = i + 1; j < args.length; j++) {
+      if ((args[j] === '--template' || args[j] === '-t') && j + 1 < args.length) {
+        templateName = args[j + 1];
+        i = j + 1;  // Skip both the flag and its value
+        break;
+      }
+    }
   } else if (arg === '--help' || arg === '-h') {
     showHelp();
     process.exit(0);
@@ -47,6 +63,11 @@ FlowMark - Convert Markdown storyboards to HTML
 
 Usage:
   flowmark [options] [input-file]
+  flowmark init [output-file] [options]
+
+Commands:
+  (default)     Convert Markdown to HTML
+  init          Create a new storyboard from a template
 
 Options:
   --input, -i <file>      Input Markdown file (default: example.md)
@@ -55,6 +76,7 @@ Options:
   --outdir <directory>    Output directory for HTML files (default: same as input)
   --recursive, -r         Process subdirectories recursively
   --watch, -w             Watch input file/directory for changes and rebuild
+  --template, -t <name>   Template to use for init (basic, mobile)
   --help, -h              Show this help message
 
 Examples:
@@ -63,6 +85,7 @@ Examples:
   flowmark --watch --input story.md
   flowmark --dir ./storyboards --outdir ./html
   flowmark -d ./storyboards -r
+  flowmark init new-storyboard.md --template mobile
   `);
 }
 
@@ -95,6 +118,42 @@ function processStoryboardFile(inputPath, outputPath) {
     return true;
   } catch (error) {
     console.error(`Error processing ${inputPath}:`, error);
+    return false;
+  }
+}
+
+// Initialize a new storyboard from a template
+function initStoryboard() {
+  try {
+    // Default output path if not specified
+    if (!outputStoryboardPath) {
+      outputStoryboardPath = 'new-storyboard.md';
+    }
+    
+    // Check if file already exists
+    if (fs.existsSync(outputStoryboardPath)) {
+      console.error(`Error: File '${outputStoryboardPath}' already exists. Please choose a different name or delete the existing file.`);
+      process.exit(1);
+    }
+    
+    // Get template path
+    const templateFile = `${templateName}-storyboard.md`;
+    const templatePath = path.join(__dirname, '..', 'templates', templateFile);
+    
+    // Check if template exists
+    if (!fs.existsSync(templatePath)) {
+      console.error(`Error: Template '${templateName}' not found. Available templates: basic, mobile`);
+      process.exit(1);
+    }
+    
+    // Copy template to output path
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    fs.writeFileSync(outputStoryboardPath, templateContent);
+    
+    console.log(`FlowMark: Created new storyboard at ${outputStoryboardPath} using the ${templateName} template.`);
+    return true;
+  } catch (error) {
+    console.error('Error initializing storyboard:', error);
     return false;
   }
 }
@@ -166,7 +225,10 @@ function processDirectory() {
 }
 
 // Main processing
-if (directoryMode) {
+if (initMode) {
+  // Initialize a new storyboard
+  initStoryboard();
+} else if (directoryMode) {
   // Process directory
   processDirectory();
   

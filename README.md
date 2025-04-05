@@ -75,6 +75,12 @@ npx flowmark --dir storyboards --outdir html
 # Process files in a directory and its subdirectories
 npx flowmark -d storyboards -r --outdir html
 
+# Create a new storyboard from template
+npx flowmark init new-story.md
+
+# Create a new storyboard using a specific template
+npx flowmark init new-mobile-story.md --template mobile
+
 # Show help
 npx flowmark --help
 ```

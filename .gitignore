@@ -30,4 +30,8 @@ example.html
 
 # Test directories
 test-output/
-test-storyboards/ 
+test-storyboards/
+
+# Test files
+test-init.md
+test-mobile.md 
