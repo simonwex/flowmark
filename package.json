@@ -1,0 +1,20 @@
+{
+  "name": "storyboard-md",
+  "version": "0.1.0",
+  "description": "A library to represent UX storyboards using Markdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "markdown",
+    "storyboard",
+    "ux",
+    "design"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^4.3.0"
+  }
+} 
