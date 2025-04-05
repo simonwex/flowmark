@@ -26,4 +26,8 @@ build/
 Thumbs.db
 
 # Generated files
-example.html 
+example.html
+
+# Test directories
+test-output/
+test-storyboards/ 
