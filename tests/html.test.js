@@ -18,7 +18,7 @@ describe('HTML Generator', () => {
   test('should include the title in the generated HTML', () => {
     const html = generateHTML(mockStoryboard);
     expect(html).toContain('<title>Test Storyboard</title>');
-    expect(html).toContain('<h1 class="storyboard-title">Test Storyboard</h1>');
+    expect(html).toContain('<h1 class="flowmark-title">Test Storyboard</h1>');
   });
 
   test('should include all scenario details in the generated HTML', () => {
@@ -46,8 +46,48 @@ describe('HTML Generator', () => {
     
     const html = generateHTML(emptyStoryboard);
     expect(html).toContain('<title></title>');
-    expect(html).toContain('<h1 class="storyboard-title"></h1>');
+    expect(html).toContain('<h1 class="flowmark-title"></h1>');
     expect(html).toContain('<ul>');
     expect(html).toContain('</ul>');
+  });
+
+  test('should render steps as cards in steps-container', () => {
+    mockStoryboard.steps = [
+      {
+        title: 'Step 1: First Step',
+        stepNumber: 1,
+        visual: 'This is the first visual description',
+        caption: {
+          Action: 'User does action 1',
+          Emotion: 'User feels emotion 1'
+        }
+      },
+      {
+        title: 'Step 2: Second Step',
+        stepNumber: 2,
+        visual: 'This is the second visual description',
+        caption: {
+          Action: 'User does action 2',
+          Emotion: 'User feels emotion 2'
+        }
+      }
+    ];
+    
+    const html = generateHTML(mockStoryboard);
+    
+    expect(html).toContain('<div class="steps-container">');
+    
+    expect(html).toContain('<div class="step-card">');
+    expect(html).toContain('<span class="step-number">1</span>');
+    expect(html).toContain('<span class="step-number">2</span>');
+    
+    expect(html).toContain('First Step');
+    expect(html).toContain('Second Step');
+    expect(html).toContain('This is the first visual description');
+    expect(html).toContain('This is the second visual description');
+    expect(html).toContain('User does action 1');
+    expect(html).toContain('User feels emotion 1');
+    expect(html).toContain('User does action 2');
+    expect(html).toContain('User feels emotion 2');
   });
 }); 

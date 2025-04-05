@@ -1,22 +1,22 @@
-# Markdown UX Storyboard
+# FlowMark
 
-A library to represent UX storyboards using Markdown.
+A library to represent UX storyboards and user flows using Markdown.
 
 ## Installation
 
 ```bash
 # Install from npm (when published)
-npm install storyboard-md
+npm install flowmark
 
 # Or from GitHub
-npm install github:yourusername/storyboard.md
+npm install github:yourusername/flowmark
 ```
 
 For development:
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/storyboard.md.git
-cd storyboard.md
+git clone https://github.com/yourusername/flowmark.git
+cd flowmark
 
 # Install dependencies
 npm install
@@ -55,14 +55,46 @@ npm install
 > *   **Environment:** Same home office.
 ```
 
+### Command Line Interface
+
+FlowMark includes a CLI for easy conversion of Markdown files to HTML:
+
+```bash
+# Basic usage
+npx flowmark story.md
+
+# Specify output file
+npx flowmark -i story.md -o story.html
+
+# Watch mode (auto-regenerate when file changes)
+npx flowmark -w -i story.md
+
+# Show help
+npx flowmark --help
+```
+
+### Programmatic Usage
+
+```javascript
+const { parseStoryboard, generateHTML, processFile } = require('flowmark');
+
+// Process a file
+processFile('input.md', 'output.html');
+
+// Or process markdown content directly
+const markdown = `# My Storyboard\n## Scenario Details\n...`;
+const storyboard = parseStoryboard(markdown);
+const html = generateHTML(storyboard);
+```
+
 ## Contributing
 
 ### Development
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/storyboard.md.git
-cd storyboard.md
+git clone https://github.com/yourusername/flowmark.git
+cd flowmark
 
 # Install dependencies
 npm install

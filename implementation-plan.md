@@ -1,6 +1,6 @@
-# Storyboard.md Implementation Plan
+# FlowMark Implementation Plan
 
-This document outlines the planned features and improvements for the storyboard.md library.
+This document outlines the planned features and improvements for the FlowMark library.
 
 ## Core Functionality
 
@@ -13,9 +13,9 @@ This document outlines the planned features and improvements for the storyboard.
 
 ### Command Line Interface
 
-- [ ] Create a CLI entry point (`bin/storyboard.js`)
-- [ ] Implement command-line argument parsing
-- [ ] Add watch mode for live reload during development
+- [x] Create a CLI entry point (`bin/flowmark.js`)
+- [x] Implement command-line argument parsing
+- [x] Add watch mode for live reload during development
 - [ ] Support batch processing of multiple files
 - [ ] Add command for initializing a new storyboard from a template
 

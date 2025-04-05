@@ -31,9 +31,52 @@ describe('Storyboard Parser', () => {
   });
 
   // We'll add step parsing tests once that functionality is implemented
-  describe('Steps array', () => {
-    test('should initialize an empty steps array', () => {
-      expect(storyboard.steps).toBeInstanceOf(Array);
+  describe('Steps parsing', () => {
+    test('should extract steps with their number, title, visual and caption', () => {
+      expect(storyboard.steps).toHaveLength(2);
+      
+      // Check first step
+      expect(storyboard.steps[0].stepNumber).toBe(1);
+      expect(storyboard.steps[0].title).toBe('Step 1: Login Attempt Failed');
+      expect(storyboard.steps[0].visual).toBeTruthy();
+      expect(storyboard.steps[0].visual).toContain('Jane sits at her messy home office desk');
+      expect(storyboard.steps[0].caption).toHaveProperty('Action');
+      expect(storyboard.steps[0].caption).toHaveProperty('Emotion');
+      expect(storyboard.steps[0].caption).toHaveProperty('Thought');
+      expect(storyboard.steps[0].caption).toHaveProperty('Environment');
+      
+      // Check second step
+      expect(storyboard.steps[1].stepNumber).toBe(2);
+      expect(storyboard.steps[1].title).toBe('Step 2: Initiates Password Reset');
+      expect(storyboard.steps[1].visual).toBeTruthy();
+      expect(storyboard.steps[1].caption).toHaveProperty('Action');
+      expect(storyboard.steps[1].caption).toHaveProperty('Emotion');
+      expect(storyboard.steps[1].caption).toHaveProperty('Thought');
+      expect(storyboard.steps[1].caption).toHaveProperty('Environment');
+    });
+    
+    test('should sort steps by number regardless of order in markdown', () => {
+      // Create a test with steps out of order
+      const outOfOrderMarkdown = `# Test Storyboard
+      
+## Scenario Details
+* **Persona:** Test User
+
+## Step 2: Second Step
+> **Visual:** Second visual.
+> **Caption:**
+> * **Action:** Second action.
+
+## Step 1: First Step
+> **Visual:** First visual.
+> **Caption:**
+> * **Action:** First action.
+`;
+      
+      const parsed = parseStoryboard(outOfOrderMarkdown);
+      expect(parsed.steps).toHaveLength(2);
+      expect(parsed.steps[0].stepNumber).toBe(1);
+      expect(parsed.steps[1].stepNumber).toBe(2);
     });
   });
   

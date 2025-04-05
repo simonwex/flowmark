@@ -1,8 +1,11 @@
 {
-  "name": "storyboard-md",
+  "name": "flowmark",
   "version": "0.1.0",
-  "description": "A library to represent UX storyboards using Markdown",
+  "description": "A library to represent UX storyboards and user flows using Markdown",
   "main": "index.js",
+  "bin": {
+    "flowmark": "./bin/flowmark.js"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
@@ -12,7 +15,10 @@
     "markdown",
     "storyboard",
     "ux",
-    "design"
+    "design",
+    "flow",
+    "user flow",
+    "user journey"
   ],
   "author": "",
   "license": "MIT",
