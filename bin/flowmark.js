@@ -14,7 +14,6 @@ let inputDir = null;
 let outputDir = null;
 let recursive = false;
 let initMode = false;
-let templateName = 'basic';
 let outputStoryboardPath = null;
 
 // Process arguments
@@ -39,14 +38,6 @@ for (let i = 0; i < args.length; i++) {
     if (i + 1 < args.length && !args[i + 1].startsWith('-')) {
       outputStoryboardPath = args[++i];
     }
-    // Look for template flag
-    for (let j = i + 1; j < args.length; j++) {
-      if ((args[j] === '--template' || args[j] === '-t') && j + 1 < args.length) {
-        templateName = args[j + 1];
-        i = j + 1;  // Skip both the flag and its value
-        break;
-      }
-    }
   } else if (arg === '--help' || arg === '-h') {
     showHelp();
     process.exit(0);
@@ -63,7 +54,7 @@ FlowMark - Convert Markdown storyboards to HTML
 
 Usage:
   flowmark [options] [input-file]
-  flowmark init [output-file] [options]
+  flowmark init [output-file]
 
 Commands:
   (default)     Convert Markdown to HTML
@@ -76,7 +67,6 @@ Options:
   --outdir <directory>    Output directory for HTML files (default: same as input)
   --recursive, -r         Process subdirectories recursively
   --watch, -w             Watch input file/directory for changes and rebuild
-  --template, -t <name>   Template to use for init (basic, mobile)
   --help, -h              Show this help message
 
 Examples:
@@ -85,7 +75,7 @@ Examples:
   flowmark --watch --input story.md
   flowmark --dir ./storyboards --outdir ./html
   flowmark -d ./storyboards -r
-  flowmark init new-storyboard.md --template mobile
+  flowmark init new-storyboard.md
   `);
 }
 
@@ -137,12 +127,11 @@ function initStoryboard() {
     }
     
     // Get template path
-    const templateFile = `${templateName}-storyboard.md`;
-    const templatePath = path.join(__dirname, '..', 'templates', templateFile);
+    const templatePath = path.join(__dirname, '..', 'templates', 'basic-storyboard.md');
     
     // Check if template exists
     if (!fs.existsSync(templatePath)) {
-      console.error(`Error: Template '${templateName}' not found. Available templates: basic, mobile`);
+      console.error(`Error: Template file not found.`);
       process.exit(1);
     }
     
@@ -150,7 +139,7 @@ function initStoryboard() {
     const templateContent = fs.readFileSync(templatePath, 'utf-8');
     fs.writeFileSync(outputStoryboardPath, templateContent);
     
-    console.log(`FlowMark: Created new storyboard at ${outputStoryboardPath} using the ${templateName} template.`);
+    console.log(`FlowMark: Created new storyboard at ${outputStoryboardPath}.`);
     return true;
   } catch (error) {
     console.error('Error initializing storyboard:', error);
