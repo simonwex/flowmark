@@ -60,7 +60,7 @@ npm install
 FlowMark includes a CLI for easy conversion of Markdown files to HTML:
 
 ```bash
-# Basic usage
+# Basic usage - process a single file
 npx flowmark story.md
 
 # Specify output file
@@ -68,6 +68,12 @@ npx flowmark -i story.md -o story.html
 
 # Watch mode (auto-regenerate when file changes)
 npx flowmark -w -i story.md
+
+# Process all markdown files in a directory
+npx flowmark --dir storyboards --outdir html
+
+# Process files in a directory and its subdirectories
+npx flowmark -d storyboards -r --outdir html
 
 # Show help
 npx flowmark --help
